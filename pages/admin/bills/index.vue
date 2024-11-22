@@ -8,44 +8,36 @@
 
             <!-- Add Button and Description -->
             <div class="sm:flex sm:items-center sm:justify-between">
-                   <!--Search Bar-->
-                   <div class="relative flex flex-1 ml-8 mt-5">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500"
-                            viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M9 3a6 6 0 11-6 6 6 6 0 016-6zM2 9a7 7 0 1114 0A7 7 0 012 9zm11.293 4.293a1 1 0 00-1.415-1.414L10 12.586l-1.879-1.878a1 1 0 00-1.415 1.414L8.586 14l-1.879 1.879a1 1 0 001.415 1.415L10 15.414l1.879 1.879a1 1 0 001.415-1.415L11.414 14l1.879-1.879a1 1 0 000-1.415z"
-                                clip-rule="evenodd" />
-                        </svg>
-                        <input type="text" placeholder="Search" v-model="searchQuery"  @input="sanitizeSearchQuery"
-                            class="block w-75 rounded-md border border-gray-400 text-sm pl-8 pr-3 py-1.5" />
-                    </div>
-                    <!-- Add Customer Button -->
-                    <div class="mt-4 sm:ml-16 sm:mt-3 sm:flex-none mr-8">
-                        <button type="button" @click="navigateToCreate"
-                            class="block rounded-md bg-gray-900 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                           ADD BILL
-                        </button>
-                    </div>
+                <!--Search Bar-->
+                <div class="relative flex flex-1 ml-8 mt-5">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500"
+                        viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M9 3a6 6 0 11-6 6 6 6 0 016-6zM2 9a7 7 0 1114 0A7 7 0 012 9zm11.293 4.293a1 1 0 00-1.415-1.414L10 12.586l-1.879-1.878a1 1 0 00-1.415 1.414L8.586 14l-1.879 1.879a1 1 0 001.415 1.415L10 15.414l1.879 1.879a1 1 0 001.415-1.415L11.414 14l1.879-1.879a1 1 0 000-1.415z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <input type="text" placeholder="Search" v-model="searchQuery" @input="sanitizeSearchQuery"
+                        class="block w-75 rounded-md border border-gray-400 text-sm pl-8 pr-3 py-1.5" />
                 </div>
-                <div>
+                <!-- Add Customer Button -->
+                <div class="mt-4 sm:ml-16 sm:mt-3 sm:flex-none mr-8">
+                    <button type="button" @click="navigateToCreate"
+                        class="block rounded-md bg-gray-900 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        ADD BILL
+                    </button>
+                </div>
+            </div>
+            <div>
+                <!--Table1-->
                 <Alert type="danger" :text="state.error?.message" v-if="state.error" />
                 <div class="table-responsive">
-                    <Table 
-                        :columnHeaders="state.columnHeaders" 
-                        :data="filteredData" 
-                        :isLoading="state.isTableLoading" 
-                        :sortData="state.sortData" 
-                        @sort="sort"
-                    >
+                    <Table :columnHeaders="state.columnHeaders" :data="{ data: filteredData }"
+                        :isLoading="state.isTableLoading" :sortData="state.sortData" @sort="sort">
+
                         <template #body>
                             <!-- Check if the table is loading or has no data -->
-                            <tr v-if="state.isTableLoading">
-                                <td class="text-center py-4" colspan="9">
-                                    Loading...
-                                </td>
-                            </tr>
-                            <tr v-else-if="!state.isTableLoading && filteredData.length === 0">
+                            <tr v-if="!state.isTableLoading && filteredData.length === 0">
                                 <td class="text-center py-4" colspan="9">
                                     No bill is available
                                 </td>
@@ -81,14 +73,13 @@
                                 </td>
                                 <td class="pl-3">
                                     <div class="flex space-x-2">
-                                        <button @click="viewBill(bill.id)" 
-                                        class="text-gray-600 hover:text-gray-900">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                                    viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path fill-rule="evenodd"
-                                                        d="M12 4.5C8.798 4.5 6 7.057 6 10.5S8.798 16.5 12 16.5 18 13.943 18 10.5 15.202 4.5 12 4.5ZM12 15.5C10.343 15.5 9 14.156 9 12.5S10.343 9.5 12 9.5 15 10.844 15 12.5 13.657 15.5 12 15.5ZM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2ZM12 20C7.03 20 3 15.97 3 12S7.03 4 12 4s9 4.03 9 9-4.03 9-9 9Z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
+                                        <button @click="viewBill(bill.id)" class="text-gray-600 hover:text-gray-900">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
+                                                fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                    d="M12 4.5C8.798 4.5 6 7.057 6 10.5S8.798 16.5 12 16.5 18 13.943 18 10.5 15.202 4.5 12 4.5ZM12 15.5C10.343 15.5 9 14.156 9 12.5S10.343 9.5 12 9.5 15 10.844 15 12.5 13.657 15.5 12 15.5ZM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2ZM12 20C7.03 20 3 15.97 3 12S7.03 4 12 4s9 4.03 9 9-4.03 9-9 9Z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
                                         </button>
                                         <button @click="editBill(bill.id)" class="text-gray-600 hover:text-gray-900">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -109,59 +100,100 @@
                 <!-- <Pagination :data="state.bills" @previous="previos" @next="next" /> -->
             </div>
             <!-- View Bill Modal -->
-<div v-if="billToView" class="fixed inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
-        <div class="text-center mb-10">
-            <h2 class="text-xl font-semibold text-gray-800">Bill Details</h2>
-        </div>
-        <!-- Updated Grid Layout to show two items per row -->
-        <div class="grid grid-cols-2 gap-4 mx-4">
-            <!-- First Row -->
-            <div class="flex items-center mb-2">
-                <label class="text-xs font-medium text-gray-700 w-36 mr-2">Supplier:</label>
-                <span class="font-semibold">{{ billToView.supplier_id }}</span>
-            </div>
-            <div class="flex items-center mb-2">
-                <label class="text-xs font-medium text-gray-700 w-36 mr-2">Prepared By:</label>
-                <span class="font-semibold">{{ billToView.prepared_by_id }}</span>
-            </div>
+            <div v-if="billToView" class="fixed inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50">
+                <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
+                    <div class="text-center mb-10">
+                        <h2 class="text-xl font-semibold text-gray-800">Bill Details</h2>
+                    </div>
+                    <!-- Updated Grid Layout to show two items per row -->
+                    <div class="grid grid-cols-2 gap-4 mx-4">
+                        <!-- First Row -->
+                        <div class="flex items-center mb-2">
+                            <label class="text-xs font-medium text-gray-700 w-36 mr-2">Supplier:</label>
+                            <span class="font-semibold">{{ billToView.supplier_id }}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <label class="text-xs font-medium text-gray-700 w-36 mr-2">Prepared By:</label>
+                            <span class="font-semibold">{{ billToView.prepared_by_id }}</span>
+                        </div>
 
-            <!-- Second Row -->
-            <div class="flex items-center mb-2">
-                <label class="text-xs font-medium text-gray-700 w-36 mr-2">Cancelled By:</label>
-                <span class="font-semibold">{{ billToView.cancelled_by_id }}</span>
-            </div>
-            <div class="flex items-center mb-2">
-                <label class="text-xs font-medium text-gray-700 w-36 mr-2">P.O. Number:</label>
-                <span class="font-semibold">{{ billToView.purchase_order_no }}</span>
-            </div>
+                        <!-- Second Row -->
+                        <div class="flex items-center mb-2">
+                            <label class="text-xs font-medium text-gray-700 w-36 mr-2">Cancelled By:</label>
+                            <span class="font-semibold">{{ billToView.cancelled_by_id }}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <label class="text-xs font-medium text-gray-700 w-36 mr-2">P.O. Number:</label>
+                            <span class="font-semibold">{{ billToView.purchase_order_no }}</span>
+                        </div>
 
-            <!-- Third Row -->
-            <div class="flex items-center mb-2">
-                <label class="text-xs font-medium text-gray-700 w-36 mr-2">Bill Date:</label>
-                <span class="font-semibold">{{ billToView.bill_date }}</span>
-            </div>
-            <div class="flex items-center mb-2">
-                <label class="text-xs font-medium text-gray-700 w-36 mr-2">Amount:</label>
-                <span class="font-semibold">₱ {{ Number(billToView.amount).toFixed(2) }}</span>
-            </div>
+                        <!-- Third Row -->
+                        <div class="flex items-center mb-2">
+                            <label class="text-xs font-medium text-gray-700 w-36 mr-2">Bill Date:</label>
+                            <span class="font-semibold">{{ billToView.bill_date }}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <label class="text-xs font-medium text-gray-700 w-36 mr-2">Amount:</label>
+                            <span class="font-semibold">₱ {{ Number(billToView.amount).toFixed(2) }}</span>
+                        </div>
 
-            <!-- Fourth Row -->
-            <div class="flex items-center mb-2">
-                <label class="text-xs font-medium text-gray-700 w-36 mr-2">Terms:</label>
-                <span class="font-semibold">{{ billToView.payment_terms }}</span>
+                        <!-- Fourth Row -->
+                        <div class="flex items-center mb-10">
+                            <label class="text-xs font-medium text-gray-700 w-36 mr-2">Terms:</label>
+                            <span class="font-semibold">{{ billToView.payment_terms }}</span>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th
+                                    class="border px-4 py-2 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Bill ID
+                                </th>
+                                <th
+                                    class="border px-4 py-2 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Product ID
+                                </th>
+                                <th
+                                    class="border px-4 py-2 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Unit
+                                </th>
+                                <th
+                                    class="border px-4 py-2 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Expiry Date
+                                </th>
+                                <th
+                                    class="border px-4 py-2 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Quantity
+                                </th>
+                                <th
+                                    class="border px-4 py-2 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    Price
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="detail in billDetailsToView" :key="detail.id">
+                                <td class="border px-4 py-2">{{ detail.bill_id }}</td>
+                                <td class="border px-4 py-2">{{ detail.product_id }}</td>
+                                <td class="border px-4 py-2">{{ detail.unit }}</td>
+                                <td class="border px-4 py-2">{{ detail.expiry_date }}</td>
+                                <td class="border px-4 py-2">{{ detail.quantity }}</td>
+                                <td class="border px-4 py-2">{{ detail.price }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="flex justify-end gap-2 mt-4">
+                        <button @click="billToView = null"
+                            class="rounded-md bg-gray-200 px-4 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">
+                            Close
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="flex justify-end gap-2 mt-4">
-            <button @click="billToView = null"
-                class="rounded-md bg-gray-200 px-4 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">
-                Close
-            </button>
-        </div>
-    </div>
-</div>
-
+            </div>
         </main>
     </NuxtLayout>
 </template>
@@ -180,6 +212,7 @@ import { employeeService } from '~/components/api/admin/EmployeeService';
 const currentTablePage = ref(1);
 
 import { useI18n } from 'vue-i18n';
+import { billDetailService } from '~/components/api/admin/BillDetailService';
 // Alert and i18n setup
 const { successAlert, errorAlert, warningAlert } = useAlert();
 const { t } = useI18n();
@@ -363,14 +396,19 @@ async function fetchBills() {
 }
 
 const billToView = ref<any>(null);
+const billDetailsToView = ref<any>([]);
 
 const viewBill = async (id: number) => {
-  try {
-    const response = await billService.getBillById(id); // assuming this method exists
-    billToView.value = response.data; // Store the fetched bill details
-  } catch (error) {
-    console.error('Failed to fetch bill details:', error);
-  }
+    try {
+        const bill = await billService.getBillById(id);
+        const allBillDetails = await billDetailService.getBillDetails();
+
+        billToView.value = bill.data;
+        billDetailsToView.value = allBillDetails.data.filter((detail: { bill_id: number }) => detail.bill_id === id);
+
+    } catch (error) {
+        console.error('Failed to fetch bill details:', error);
+    }
 };
 
 const editBill = async (id: number) => {
@@ -385,7 +423,7 @@ const sort = async (sortData: SortData) => {
     await fetchBills();
 };
 
-const searchQuery = ref('');  
+const searchQuery = ref('');
 
 function sanitizeSearchQuery() {
     searchQuery.value = searchQuery.value.replace(/[^a-zA-Z]/g, '');
@@ -393,21 +431,20 @@ function sanitizeSearchQuery() {
 
 const filteredData = computed(() => {
     if (!searchQuery.value) {
-        return state.bills.data; 
+        return state.bills.data;
     }
 
-    const query = searchQuery.value.toLowerCase(); 
+    const query = searchQuery.value.toLowerCase();
 
-    const filtered = state.bills.data.filter(bill => 
-        bill.supplier_id.toLowerCase().includes(query)   
+    const filtered = state.bills.data.filter(bill =>
+        bill.supplier_id.toLowerCase().includes(query)
     );
 
-    console.log('Filtered Data:', filtered);t
+    console.log('Filtered Data:', filtered); t
     return filtered;
 });
 
 function navigateToCreate() {
     navigateTo("bills/create")
 }
-
 </script>

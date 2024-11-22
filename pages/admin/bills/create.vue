@@ -1,96 +1,89 @@
 <template>
     <NuxtLayout name="admin">
         <main>
+
             <Head>
                 <Title>Bills Details - {{ runtimeConfig.public.appName }}</Title>
             </Head>
-                    <div>
-                        <div class="text-center mb-7">
-                            <h2 class="text-xl font-semibold text-gray-800">BILLS DETAILS</h2>
-                        </div>
-                        <hr class="border-t-2 border-gray-300 mb-7" />
-                        <Alert type="danger" :text="state?.error?.message"
-                            v-if="state.error?.message && state.error.message.length > 0" />
-                        <div class="grid grid-cols-2 gap-6"> <!-- 2-column grid with gap between columns -->
-                            <!-- Left Column (3 Fields) -->
-                            <div class="space-y-6"> <!-- Added spacing between each form field -->
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Supplier ID</label>
-                                    <div class="flex items-center mb-4">
-                                        <FormSelect id="supplier_id" v-model="bill.supplier_id"
-                                            :options="state.suppliers.filter(suppliers => suppliers.is_active).map(suppliers => ({ value: suppliers.id, label: suppliers.name }))"
-                                            placeholder="Select supplier" required />
-                                        <FormError :error="state?.error?.errors?.supplier_id?.[0]" />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Prepared by</label>
-                                    <div class="flex items-center mb-4">
-                                        <FormNumberField for="prepared_by_id" name="prepared_by_id"
-                                            v-model="bill.prepared_by_id" :placeholder="`${firstname} ${lastname}`"
-                                            :value="`${firstname} ${lastname}`" readonly
-                                            class="cursor-default bg-gray-200" />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Purchase Oder No</label>
-                                    <div class="flex items-center mb-4">
-                                        <FormTextField for="purchase_order_no" name="purchase_order_no"
-                                            v-model="bill.purchase_order_no" placeholder="Purchase Order No" required />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Right Column (3 Fields) -->
-                            <div class="space-y-6"> <!-- Added spacing between each form field -->
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Bill Date</label>
-                                    <div class="flex items-center mb-4">
-                                        <flat-pickr v-model="bill.bill_date" :config="dateConfig"
-                                            class="w-full py-2 pl-3 ring-1 ring-slate-200 rounded-md focus:outline-none focus:ring-primary-700 focus:border-primary-700 focus:z-10"
-                                            placeholder="Bill Date" required />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Payment Terms</label>
-                                    <div class="flex items-center mb-3">
-                                        <FormTextField for="payment_terms" name="payment_terms"
-                                            v-model="bill.payment_terms" placeholder="Payment Terms" required />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 ml-1 mb-1">Product ID</label>
-                                    <div class="flex items-center mb-3">
-                                        <FormSelect id="product_id" v-model="billDetail.product_id"
-                                            :options="state.products.filter(products => products.is_active).map(products => ({ value: products.id, label: products.name }))"
-                                            placeholder="Select product" />
-                                        <FormError :error="state?.error?.errors?.product_id?.[0]" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-6">
+            <div>
+                <div class="text-center mb-7">
+                    <h2 class="text-xl font-semibold text-gray-800">BILLS DETAILS</h2>
+                </div>
+                <hr class="border-t-2 border-gray-300 mb-7" />
+                <Alert type="danger" :text="state?.error?.message"
+                    v-if="state.error?.message && state.error.message.length > 0" />
+                <div class="grid grid-cols-2 gap-6"> <!-- 2-column grid with gap between columns -->
                     <!-- Left Column (3 Fields) -->
+                    <div class="space-y-6"> <!-- Added spacing between each form field -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Supplier ID</label>
+                            <div class="flex items-center mb-4">
+                                <FormSelect id="supplier_id" v-model="bill.supplier_id"
+                                    :options="state.suppliers.filter(suppliers => suppliers.is_active).map(suppliers => ({ value: suppliers.id, label: suppliers.name }))"
+                                    placeholder="Select supplier" required />
+                                <FormError :error="state?.error?.errors?.supplier_id?.[0]" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Prepared by</label>
+                            <div class="flex items-center mb-4">
+                                <FormNumberField for="prepared_by_id" name="prepared_by_id"
+                                    v-model="bill.prepared_by_id" :placeholder="`${firstname} ${lastname}`"
+                                    :value="`${firstname} ${lastname}`" readonly class="cursor-default bg-gray-200" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Purchase Order No</label>
+                            <div class="flex items-center mb-4">
+                                <FormTextField for="purchase_order_no" name="purchase_order_no"
+                                    v-model="bill.purchase_order_no" placeholder="Purchase Order No" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column (3 Fields) -->
+                    <div class="space-y-6"> <!-- Added spacing between each form field -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Bill Date</label>
+                            <div class="flex items-center mb-4">
+                                <flat-pickr v-model="bill.bill_date" :config="dateConfig"
+                                    class="w-full py-2 pl-3 ring-1 ring-slate-200 rounded-md focus:outline-none focus:ring-primary-700 focus:border-primary-700 focus:z-10"
+                                    placeholder="Bill Date" required />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Payment Terms</label>
+                            <div class="flex items-center mb-3">
+                                <FormTextField for="payment_terms" name="payment_terms" v-model="bill.payment_terms"
+                                    placeholder="Payment Terms" required />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 ml-1 mb-1">Product ID</label>
+                            <div class="flex items-center mb-3">
+                                <FormSelect id="product_id" v-model="billDetail.product_id"
+                                    :options="state.products.filter(products => products.is_active).map(products => ({ value: products.id, label: products.name }))"
+                                    placeholder="Select product" />
+                                <FormError :error="state?.error?.errors?.product_id?.[0]" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6">
                     <div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Barcode</label>
                             <div class="flex items-center mb-4">
-                                <input 
-                                    id="barcode" 
-                                    v-model="billDetail.barcode" 
-                                    type="text"
+                                <input id="barcode" v-model="billDetail.barcode" type="text"
                                     class="block w-full rounded-md border border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 text-base px-3 py-2"
-                                    placeholder="Enter Barcode" 
-                                    required 
-                                />
+                                    placeholder="Enter Barcode" required />
                             </div>
                         </div>
-
                         <div>
                             <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Unit</label>
                             <div class="flex items-center mb-4">
@@ -99,7 +92,6 @@
                                     placeholder="Enter Unit" required />
                             </div>
                         </div>
-
                         <div>
                             <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Expiry Date</label>
                             <div class="flex items-center mb-4">
@@ -109,13 +101,11 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Right Column (2 Fields + Button) -->
                     <div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 ml-1 mb-2">Quantity</label>
                             <div class="flex items-center mb-4">
-                                <input id="quantity" v-model="billDetail.quantity" type="text"  @input="filterQuantity"
+                                <input id="quantity" v-model="billDetail.quantity" type="text" @input="filterQuantity"
                                     class="block w-full rounded-md border border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500 text-base px-3 py-2"
                                     placeholder="Enter Quantity" required />
                             </div>
@@ -138,51 +128,52 @@
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
 
 
-                      <!-- Second Table (inside the form) -->
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 mt-10 rounded">
-                                <thead class="bg-gray-900 text-white">
-                                    <tr>
-                                        <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white rounded-l-md">Product Name</th>
-                                        <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white">Barcode</th>
-                                        <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white">Unit</th>
-                                        <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white">Expiry Date</th>
-                                        <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white">Quantity</th>
-                                        <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white rounded-r-md">Price</th>
-                                    </tr>
-                                </thead>
+            <!-- Second Table (inside the form) -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 mt-10 rounded">
+                    <thead class="bg-gray-900 text-white">
+                        <tr>
+                            <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white rounded-l-md">
+                                Product Name</th>
+                            <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white">Barcode</th>
+                            <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white">Unit</th>
+                            <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white">Expiry Date</th>
+                            <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white">Quantity</th>
+                            <th scope="col" class="px-4 py-2 text-sm font-medium text-left text-white rounded-r-md">
+                                Price</th>
+                        </tr>
+                    </thead>
 
-                                <tbody class="bg-gray-100">
-                                    <tr v-for="(billDetail, index) in billDetailsList" :key="index"
-                                        class="border-t bg-gray-50">
-                                        <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.name }}</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.barcode }}</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.unit }}</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.expiry_date }}</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.quantity }}</td>
-                                        <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.price }}</td>
-                                    </tr>
-                                    <tr v-if="billDetailsList.length === 0">
-                                        <td colspan="8"
-                                            class="px-4 py-2 text-sm text-gray-500 text-center bg-gray-100">No bill details available.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="flex justify-end gap-2 mt-5">
-                            <button @click="saveBill" type="submit"
-                                class="rounded-md bg-gray-900 px-4 py-2 text-xxs font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
-                                Save
-                            </button>
-                            <button @click="toggleBillForm" type="button"
-                                class="rounded-md bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">
-                                Cancel
-                            </button>
-                        </div>
-            </main>
+                    <tbody class="bg-gray-100">
+                        <tr v-for="(billDetail, index) in billDetailsList" :key="index" class="border-t bg-gray-50">
+                            <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.name }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.barcode }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.unit }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.expiry_date }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.quantity }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-700">{{ billDetail.price }}</td>
+                        </tr>
+                        <tr v-if="billDetailsList.length === 0">
+                            <td colspan="8" class="px-4 py-2 text-sm text-gray-500 text-center bg-gray-100">No bill
+                                details available.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-end gap-2 mt-5">
+                <button @click="saveBill" type="submit"
+                    class="rounded-md bg-gray-900 px-4 py-2 text-xxs font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+                    Save
+                </button>
+                <button @click="toggleBillForm" type="button"
+                    class="rounded-md bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">
+                    Cancel
+                </button>
+            </div>
+        </main>
     </NuxtLayout>
 </template>
 
@@ -301,7 +292,7 @@ const bill = ref({
 });
 
 const billDetail = ref<{
-    product_id: number | string; 
+    product_id: number | string;
     name: string;
     barcode: string;
     unit: string;
@@ -430,10 +421,10 @@ async function fetchBills() {
 const toggleBillForm = () => {
     // Toggle visibility of the bill form
     showBillForm.value = !showBillForm.value;
-    
+
     // Reset the bill details list
     billDetailsList.value = [];
-    
+
     // Reset the current bill detail object
     billDetail.value = {
         product_id: '',
@@ -475,7 +466,7 @@ async function saveBill() {
 
         // Create new bill
         const response = await billService.createBills(billData);
-        
+
         // Check if the response contains the expected data ID
         if (response && response.data && response.data.id) {
             console.log(response);
@@ -550,8 +541,6 @@ const addBillDetails = () => {
         price: ''
     };
 };
-
-
 
 
 </script>

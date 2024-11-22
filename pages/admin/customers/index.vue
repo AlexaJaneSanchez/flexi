@@ -143,8 +143,8 @@
                 <div>
                     <Alert type="danger" :text="state.error?.message" v-if="state.error" />
                     <div class="table-responsive">
-                        <Table :columnHeaders="state.columnHeaders" :data="filteredData" 
-                                :isLoading="state.isTableLoading" :sortData="state.sortData" @sort="sort">
+                        <Table :columnHeaders="state.columnHeaders" :data="{ data: filteredData }"
+                               :isLoading="state.isTableLoading" :sortData="state.sortData" @sort="sort">
                                 <template #body
                                     v-if="!(state.isTableLoading || (filteredData && filteredData.length === 0))">
                                     <tr v-for="(customer, index) in filteredData" :key="index">
