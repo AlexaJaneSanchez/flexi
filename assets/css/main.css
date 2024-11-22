@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.notification-center {
+    position: fixed;
+    top: 1%; /* Adjust as needed for vertical positioning */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000; /* Adjust as necessary to ensure it's above other elements */
+}

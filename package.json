@@ -1,0 +1,41 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.23",
+    "@heroicons/vue": "^2.1.5",
+    "@intlify/unplugin-vue-i18n": "^5.2.0",
+    "@intlify/vite-plugin-vue-i18n": "^7.0.0",
+    "@kyvg/vue3-notification": "^3.3.0",
+    "@pinia/nuxt": "^0.5.4",
+    "@vue-hero-icons/solid": "^1.7.2",
+    "@vueform/multiselect": "^2.6.10",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
+    "apexcharts": "^4.0.0",
+    "axios": "^1.7.7",
+    "chart.js": "^4.4.4",
+    "flatpickr": "^4.6.13",
+    "nuxt": "^3.13.2",
+    "pinia": "^2.2.2",
+    "vue": "latest",
+    "vue-flatpickr-component": "^11.0.5",
+    "vue-i18n": "^10.0.3",
+    "vue3-apexcharts": "^1.7.0",
+    "vuelidate": "^0.7.7"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.12"
+  }
+}
